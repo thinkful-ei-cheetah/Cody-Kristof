@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" Making simple GET requests">
+  <meta charset="utf-8">
+
+  <title>Dog pictures</title>
+  <link  rel="stylesheet" href=main.css>
+</head>
+
+<body>
+  <main role="main">
+    <h1>Dog Pictures</h1>
+    <div class="form-container"></div>
+      <form>
+        <fieldset name="doggos">
+          <legend>Doggos!</legend>
+          
+          <input type="checkbox" name="dog-breed-checkbox" id="dog-breed-checkbox">
+          <label class="specific-label" for="specific-dog-breed">Would you like a specific breed picture?</label> 
+          <div class="breedOrAll-container js-breedOrAll"></div>
+          <button class="submit-btn">Let's Go</button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="container">
+    </div>
+
+  </main>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script src="views.js"></script>
+  <script src="dogAPI.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
