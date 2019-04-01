@@ -8,12 +8,18 @@ const API_CONTROLLER = (function (){
       `https://dog.ceo/api/breed/${numOrBreed}/images/random` :
       `https://dog.ceo/api/breeds/image/random/${numOrBreed}`;
   }
+
+  function handleErrors(response){
+    if (!response.ok) throw Error(response.statusText);
+    return response;
+  }
   
   function grabPhotos(){
     fetch(whichAPI(pageView.numOrBreed))
+      .then(handleErrors)
       .then(response => response.json())
       .then(responseJson => addItemsToStateAndRender(responseJson))
-      .catch (e => console.log(e.message) );
+      .catch (e => pageView.generateError(e.message));
   }
   
   function addItemsToStateAndRender(pictureObj){

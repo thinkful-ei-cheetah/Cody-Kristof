@@ -36,7 +36,7 @@ function handleSubmit(){
       pageView.numOrBreed = query;
       API_CONTROLLER.grabPhotos();
     } catch (e){
-      console.log(e.message);
+      pageView.generateError(e.message);
     } 
   });
 

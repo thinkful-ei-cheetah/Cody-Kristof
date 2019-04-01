@@ -36,6 +36,17 @@ const pageView = (function(){
     return `<div class="all-container">${htmlPictureString}</div>`;
   }
   
+  function generateError(error){
+    let errorHTML =  `<div class="error-container">
+    <br>
+    <h4>The server responded with a message: ${error}</h4>`;
+    renderError(errorHTML);
+  }
+
+  function renderError(errorMessage){
+    $('.container').html(errorMessage);
+  }
+
   function renderPictureView(){
     if (pageView.specificBreed){
       let toDisplay = generateBreedView();
@@ -56,6 +67,7 @@ const pageView = (function(){
     generateFormInputs,
     renderPictureView,
     numOrBreed,
+    generateError,
   };
 }() );
 
