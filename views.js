@@ -4,12 +4,28 @@
 const HANDLER = (function(){
 
   const  handleSubmitButton = function (){
-    $('button').submit(event => {
+    $('form').submit(event => {
       event.preventDefault();
+      try {
+        captureValues();
+      } catch (e){
+        console.error(e.message);
+      }
+      
       fetchingDataFromApi();
       console.log('hi');
     });
   };
+
+  const captureValues = function(){
+    let value;
+    value = STORE.formType ? $('#breed-select').val() :
+      $('#dog-count').val();
+ 
+    if (value.trim() === '') throw new Error('Please fill out the form');
+  };
+
+  
 
   const handleFormlogic = function() {
     $('#dog-breed-checkbox').on('click', e=>{
@@ -51,6 +67,7 @@ const HANDLER = (function(){
     handleSubmitButton();
     handleFormlogic();
     fetchingDataFromApi();
+    renderForm();
   }
 
   return {main};
