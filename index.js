@@ -2,5 +2,5 @@
 /* global $ */
 $(function(){
   // eslint-disable-next-line no-undef
-  handlers;
+  HANDLER.main();
 });
