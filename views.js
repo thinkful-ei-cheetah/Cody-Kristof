@@ -1,5 +1,5 @@
 'use strict';
-/* global $ */
+/* global $,STORE */
 
 const HANDLER = (function(){
 
@@ -13,6 +13,7 @@ const HANDLER = (function(){
 
   const handleFormlogic = function() {
     $('#dog-breed-checkbox').on('click', e=>{
+      STORE.formType = $(e.currentTarget).prop('checked');
       renderForm();
     });
   };
@@ -43,8 +44,7 @@ const HANDLER = (function(){
   };
 
   function renderForm(){
-    let formType = $('#dog-breed-checkbox').prop('checked');
-    $('.form-type').html(`${formType ? generateBreedForm() : generateAllForm()}`);
+    $('.form-type').html(`${STORE.formType ? generateBreedForm() : generateAllForm()}`);
   }
 
   function main(){
