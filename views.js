@@ -8,6 +8,7 @@ const HANDLER = (function(){
       event.preventDefault();
       try {
         captureValues();
+
       } catch (e){
         console.error(e.message);
       }
@@ -21,8 +22,10 @@ const HANDLER = (function(){
     let value;
     value = STORE.formType ? $('#breed-select').val() :
       $('#dog-count').val();
- 
+    
     if (value.trim() === '') throw new Error('Please fill out the form');
+    STORE.value = value;
+
   };
 
   
@@ -33,17 +36,33 @@ const HANDLER = (function(){
       renderForm();
     });
   };
+  const renderImage = function(){
+    console.log(createPictureHtml());
+    $('.all-container').html(createPictureHtml());
+  };
+  const createPictureHtml = function(){
+    let images = STORE.items.map(image => generatePicture(image));
 
+    return images.join('');
+
+  };
+  const generatePicture = function(imageUrl){
+    return `<img class='all-photo' src=${imageUrl} alt='pictue of dog'>`;
+  };
   const  fetchingDataFromApi = function (){
     console.log('fetching data');
-    fetch('https://dog.ceo/api/breeds/image/random')
+    let url = `https://dog.ceo/api/breeds/image/random/${STORE.value}`;
+    fetch(url)
       .then(response => response.json())
-      .then(jsonDatat => console.log('hi'))
+      .then(addItemToStore)
+      .then(renderImage)
       .catch(error => alert('Something went wrong. Try again later.'));
   };
-
-  'use strict';
-  /*global $ */
+  const addItemToStore = function(array){
+    STORE.items.length = 0;
+    STORE.items.push(...array.message);
+  };
+  
 
   const generateBreedForm = function(){
     return `<label for="breed-select">What breed would you like a picture of?</label>
@@ -66,8 +85,8 @@ const HANDLER = (function(){
   function main(){
     handleSubmitButton();
     handleFormlogic();
-    fetchingDataFromApi();
     renderForm();
+
   }
 
   return {main};
