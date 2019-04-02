@@ -33,11 +33,11 @@ const HANDLER = (function(){
   const handleFormlogic = function() {
     $('#dog-breed-checkbox').on('click', e=>{
       STORE.formType = $(e.currentTarget).prop('checked');
+      STORE.value = '';
       renderForm();
     });
   };
   const renderImage = function(){
-    console.log(createPictureHtml());
     $('.all-container').html(createPictureHtml());
   };
   const createPictureHtml = function(){
@@ -49,18 +49,43 @@ const HANDLER = (function(){
   const generatePicture = function(imageUrl){
     return `<img class='all-photo' src=${imageUrl} alt='pictue of dog'>`;
   };
+
+
+  const checkEntry = function(entry){
+    const removedSpaces = entry.trim();
+    if (removedSpaces === '') throw Error('You need to enter a breed');
+    const toCheck = removedSpaces.toLowerCase().split(' ');
+  
+    console.log('im here')
+    if (toCheck.length === 1 ) return toCheck[0];
+  
+    if (toCheck.length > 2 ) throw Error('No Breeds Found');
+  
+    if (toCheck.join(' ') === 'german shepherd') return 'germanshepherd';
+  
+    return toCheck[1] + '-' + toCheck[0];
+  }
+
   const  fetchingDataFromApi = function (){
+    if (STORE.formType === true) STORE.value = checkEntry(STORE.value);
     console.log('fetching data');
-    let url = `https://dog.ceo/api/breeds/image/random/${STORE.value}`;
+    let url = STORE.formType ? `https://dog.ceo/api/breed/${STORE.value}/images/random` : 
+      `https://dog.ceo/api/breeds/image/random/${STORE.value}`;
+
     fetch(url)
       .then(response => response.json())
       .then(addItemToStore)
       .then(renderImage)
       .catch(error => alert('Something went wrong. Try again later.'));
   };
-  const addItemToStore = function(array){
+  const addItemToStore = function(res){
+    
     STORE.items.length = 0;
-    STORE.items.push(...array.message);
+    if (STORE.formType === true){
+      STORE.items.push(res.message);
+    } else {
+    STORE.items.push(...res.message);
+    }
   };
   
 

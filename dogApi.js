@@ -3,7 +3,7 @@
 const STORE = (function (){
   let items= [];
   let formType =false;
-  let value = 0;
+  let value = '';
   return {
     items,
     formType
